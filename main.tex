@@ -3,6 +3,12 @@
 \usepackage[spanish]{babel}
 \usepackage{bibentry}
 \usepackage[numbers]{natbib}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+
+\allowdisplaybreaks
 
 \title{Ontología} 
 
@@ -16,7 +22,177 @@
 \end{abstract}
 
 \section{Ontología}
-$$Spermatozoon(x), spermatozoonID(x,y), Midpiece(x), midpieceLenght(x,y), $$
+\begin{align*}
+\Sigma = \{&Spermatozoon(x), spermatozoonRoi(x,y), Midpiece(x), \\
+&midpieceLenght(x,y), midpieceResidualCyto(x,y), \\
+&spermMidpiece(x,y), PrincipalPiece(x), \\
+&principalUniform(x,y), principalWidth(x,y), principalSharp(x,y), \\
+&principalLoop(x,y), spermPrincipal(x,y), Head(x), headLeght(x,y), \\
+&headAligment(x,y), headSize(x,y), headVacuoles(x,y), \\
+&headContour(x), contourSmooth(x,y), contourOvalShape(x,y), \\		
+&Acrosome(x),acrosomeCoverage(x,y), vacuolesQuantity(x,y), \\
+&vacuolesSize(x,y), Image(x), imageDate(x,y), spermImage(x,y) \\
+&Sample(x), stainingSample(x,y), Extraction(x), \\
+&sampleExtraction(x,y), Patient(x), extractionPatient(x,y),\\
+&Float(x),Integer(x),Boolean(x), String(x)\}
+\end{align*}
+Forma de la base de datos: clases y multiplicidad
+\begin{align*}
+Spermatozoon &\sqsubseteq \exists spermPrincipal \sqcap (\geq 1\, spermPrincipal)\\
+\exists spermPrincipal &\sqsubseteq Spermatozoon \\
+PrincipalPiece &\sqsubseteq \exists spermPrincipal^- \sqcap (\geq 1\, spermPrincipal^-) \\
+\exists spermPrincipal^- &\sqsubseteq PrincipalPiece \\
+Spermatozoon &\sqsubseteq \exists spermMidpiece \sqcap (\geq 1\, spermPrincipal)\\
+\exists spermMidpiece &\sqsubseteq Spermatozoon \\
+Midpiece &\sqsubseteq \exists spermMidpiece^- \sqcap(\geq 1\, spermPrincipal^-)\\
+\exists spermMidpiece^- &\sqsubseteq Midpiece \\
+Spermatozoon &\sqsubseteq \exists spermHead \sqcap(\geq 1\, spermHead)\\
+\exists spermHead &\sqsubseteq Spermatozoon \\
+Head &\sqsubseteq  \exists spermHead^- \sqcap(\geq 1\, spermHead^-)\\
+\exists spermHead^- &\sqsubseteq Head \\
+Head &\sqsubseteq \exists headHContour \sqcap(\geq 1\, headHContour)\\
+\exists headHContour &\sqsubseteq Head\\
+HContour &\sqsubseteq \exists headHContour^- \sqcap(\geq 1\, headHContour^-)\\
+\exists headHcontour^- &\sqsubseteq HContour \\
+Head &\sqsubseteq \exists headAcrosome \sqcap(\geq 1\, headAcrosome)\\
+\exists headAcrosome &\sqsubseteq Head \\
+Acrosome &\sqsubseteq \exists headAcrosome^- \sqcap(\geq 1\, headAcrosome^-)\\
+\exists headAcrosome^- &\sqsubseteq Acrosome \\
+\exists spermImage &\sqsubseteq Spermatozoon \\
+\exists spermImage^- &\sqsubseteq Image \\
+Image &\sqsubseteq \exists spermImage^- \sqcap (\geq 1\, spermImage^-)\\
+\exists imageSample &\sqsubseteq Image \\
+\exists imageSample^- &\sqsubseteq Sample \\
+Sample &\sqsubseteq \exists imageSample^- \sqcap(\geq 1\, imageSample^-)\\
+\exists sampleExtraction &\sqsubseteq Sample \\
+\exists sampleExtraction ^- &\sqsubseteq Extraction \\
+Extraction &\sqsubseteq \exists sampleExtraction \sqcap(\geq 1\, sampleExtraction^-)\\
+\exists extractionPatient &\sqsubseteq Extraction \\
+\exists extractionPatient^- &\sqsubseteq Patient \\
+Patient &\sqsubseteq \exists extractionPatient ^- \sqcap(\geq 1\, extractionPatient^-)\\
+NormalSpermatozoon &\sqsubseteq Spermatozoon\\
+NormalPrincipalPiec &\sqsubseteq PrincipalPiece\\
+nSpermNPrincipal &\sqsubseteq spermPrincipal\\
+\exists nSpermNPrincipal &\sqsubseteq NormalSpermatozoon\\
+\exists nSpermNPRincipal &\sqsubseteq NormalPrincipal\\
+NormalMidpiece &\sqsubseteq Midpiece\\
+nMidpieceNSperm &\sqsubseteq midpieceSperm\\
+\exists nMidpieceNSperm &\sqsubseteq NormalMidpiece\\
+\exists nMidpieceNSperm^- &\sqsubseteq NormalSpematozoon\\
+NormalHead &\sqsubseteq Head\\
+nHeadNSperm &\sqsubseteq headSperm\\
+\exists nHeadNSperm &\sqsubseteq NormalHead\\
+\exists nHeadNSperm^-& \sqsubseteq NormalSpermatozoon\\
+NormalHContour &\sqsubseteq HContour\\
+nHContourNHead &\sqsubseteq hContourHead\\
+\exists nHContourNHead &\sqsubseteq NormalHContour\\
+\exists nHContourNHead^-&\sqsubseteq NormalHead\\
+NormalAcrosome &\sqsubseteq Acrosome\\
+nAcrosomeNHead &\sqsubseteq acrosomeHead\\
+\exists nAcrosomeNHead &\sqsubseteq NormalAcrosome\\
+\exists nAcrosomeNHead^-&\sqsubseteq NormalHead
+\end{align*}
+Atributos de las clases (sin los tipos, por ahora)
+\begin{align*}
+\exists spermId &\sqsubseteq Spermatozoon\\
+\exists spermRoi &\sqsubseteq Spermatozoon\\
+\exists principalUniform &\sqsubseteq PrincipalPiece\\
+\exists principalWidth &\sqsubseteq PrincipalPiece\\
+\exists principalSharpAngle &\sqsubseteq PrincipalPiece\\
+\exists principalLoop &\sqsubseteq PrincipalPiece\\
+\exists principalRoi &\sqsubseteq PrincipalPiece\\
+\exists midpieceLength &\sqsubseteq Midpiece\\
+\exists midpieceRegular &\sqsubseteq Midpiece\\
+\exists midpieceAligment &\sqsubseteq Midpiece\\
+\exists midpieceResidualCytoplasm &\sqsubseteq Midpiece\\
+\exists midpieceRoi &\sqsubseteq Midpiece\\
+\exists headLenght &\sqsubseteq Head\\
+\exists headAligment &\sqsubseteq Head\\
+\exists headSize &\sqsubseteq Head\\
+\exists headAspectRatio &\sqsubseteq Head\\
+\exists headVacuolesQuantity &\sqsubseteq Head\\
+\exists headRoi &\sqsubseteq Head\\
+\exists headWidth &\sqsubseteq Head\\
+\exists hcontourSmooth &\sqsubseteq HContour\\
+\exists hcontourRegular &\sqsubseteq HContour\\
+\exists hcontourOvalShape &\sqsubseteq HContour\\
+\exists acrosomeCoverage &\sqsubseteq Acrosome\\
+\exists acrosomeVacuolesQuantity &\sqsubseteq Acrosome\\
+\exists acrosomeLargeVacuoles &\sqsubseteq Acrosome
+\end{align*}
 
+Página 67
+
+The head should be smooth, regularly contoured and generally oval in shape. 
+\begin{align*}
+\exists hcontourSmooth.\{true\} \sqcap &\\
+\exists hcontourOvalShape.\{true\} \sqcap &\\
+\exists hcontourRegular.\{true\}& \equiv NormalHContour
+\end{align*}
+
+There should be a well-defined acrosomal region comprising 40–70\% of the 
+head area (Menkveld et al., 2001). The acrosomal region should contain no
+large vacuoles, and not more than two small vacuoles, which should not occupy
+more than 20\% of the sperm head.
+
+\begin{align*}
+\exists acrosomeCoverage.< 40 \sqcap &\\
+\exists acrosomeCoverage.> 70 \sqcap &\\
+\exists acrosomeLargeVacuoles.\{false\} \sqcap &\\
+\exists acrosomeVacuolesQuantity.< 2 \sqcap &\\
+\exists acrosmeVacuoleCoverage.<20 \equiv & NormalAcrosome\\
+\end{align*}
+The post-acrosomal region should not
+contain any vacuoles. 
+
+The head dimensions of 77 Papanicolaou-stained spermatozoa
+(stained by the procedure given in Section 2.14.2 and classified as normal by the
+criteria given here), measured by a computerized system (coefficient of variation
+for repeated measurements 2–7\%) had the following dimensions: median length
+4.1m, 95\% CI 3.7–4.7; median width 2.8 m, 95\% CI 2.5–3.2; median length-to-width
+ratio 1.5, 95\% CI 1.3–1.8.
+
+\begin{align*}
+\exists headVacuolesQuantity.0 \sqcap &\\
+\exists headLength.>3.7 \sqcap &\\
+\exists headLength.<4.7 \sqcap &\\
+\exists headWidth.>2.5 \sqcap &\\
+\exists headWidth.<3.2 \sqcap &\\
+\exists headAspectRatio.>1.3 \sqcap &\\
+\exists headAspectRatio.<1.8 \equiv & NormalHead
+\end{align*}
+
+(el approx es poco serio, tendría que cambiarlo o definirlo)
+
+The midpiece should be slender, regular and about the same length as the
+sperm head.
+
+The midpieces of 74 Papanicolaou-stained spermatozoa (stained
+by the procedure given in Section 2.14.2 and classified as normal by the criteria
+given here) and measured by the same computerized system had the following
+dimensions: median length 4.0 m, 95\% CI 3.3–5.2; median width 0.6 m, 95\% CI
+0.5–0.7.
+
+\begin{align*}
+\exists midpieceRegular.\{true\} \sqcap &\\
+\exists midpieceSlender.\{true\} \sqcap &\\
+\exists midpieceLenght.>3.3 \sqcap &\\
+\exists midpieceLenght.<5.2 \sqcap &\\
+\exists midpieceWidth.>0.5 \sqcap &\\
+\exists midpieceWidth.<0.7 \equiv NormalMidpiece
+\end{align*}
+
+The principal piece should have a uniform calibre along its length, be thinner
+than the midpiece and be approximately 45 m long (about 10 times the head
+length)\footnote{no tengo intervalos de confianza}. 
+It may be looped back on itself (see Fig. 2.10c), provided there is no
+sharp angle indicative of a flagellar break.
+
+\begin{align*}
+\exists principalUniform.\{true\} \sqcap &\\
+\exists principalSharpAngle.\{false\} \equiv NormalPrincipalPiece
+\end{align*}
+
+Idea: formar ontologías para las características mostradas en la tabla 2.6, pág 71.
 
 \end{document}
